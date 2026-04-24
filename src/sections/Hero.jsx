@@ -79,7 +79,7 @@ export const Hero = () => {
             </div>
             <div className="relative border-gradient p-1.5">
               <div className="relative rounded-[14px] overflow-hidden bg-surface">
-                <img src="/projectImage/imgPp.jpg" alt="Manon El Mokhtari" className="w-full aspect-[4/5] object-cover transition-all duration-700 filter saturate-[0.6] contrast-110 hover:saturate-125 hover:contrast-100" onError={(e) => { e.currentTarget.style.display = "none"; }} />
+                <img src="/projectImage/ImgPp.png" alt="Manon El Mokhtari" className="w-full aspect-[14/15] object-cover transition-all duration-700 filter saturate-[0.6] contrast-110 hover:saturate-125 hover:contrast-100" onError={(e) => { e.currentTarget.style.display = "none"; }} />
                 <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent pointer-events-none" />
                 <div className="absolute inset-0 overflow-hidden pointer-events-none">
                   <div className="absolute inset-x-0 h-1/3 bg-gradient-to-b from-transparent via-secondary/10 to-transparent" style={{ animation: "slow-drift 8s ease-in-out infinite" }} />

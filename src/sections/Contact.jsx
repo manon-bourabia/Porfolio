@@ -112,7 +112,7 @@ export const Contact = () => {
                   <span className="font-display font-bold">Actuellement disponible</span>
                 </div>
                 <p className="text-sm text-muted-foreground leading-relaxed">
-                  Je suis ouverte aux opportunites en alternance, CDD, freelance ou collaboration sur vos projets. N'hesitez pas !
+                  Actuellement à la recherche d'un stage du 17 août au 6 novembre 2026. Je suis ouverte à toute opportunité de collaboration pour mettre mes compétences au service de vos projets !
                 </p>
               </div>
             </div>
