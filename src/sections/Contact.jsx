@@ -33,7 +33,7 @@ export const Contact = () => {
       if (!serviceId || !templateId || !publicKey) {
         throw new Error("EmailJS n'est pas configure. Verifie tes variables d'environnement.");
       }
-      await emailjs.send(serviceId, templateId, { name: formData.name, email: formData.email, message: formData.message }, publicKey);
+      await emailjs.send(serviceId, templateId, { from_name: formData.name, reply_to: formData.email, subject: "Message depuis le portfolio", message: formData.message }, publicKey);
       setSubmitStatus({ type: "success", message: "Message bien recu ! Je reviens vers vous au plus vite." });
       setFormData({ name: "", email: "", message: "" });
     } catch (error) {
