@@ -6,6 +6,7 @@ import SectionTitle from "../components/SectionTitle";
 
 const ProjectCard = ({ repo, index }) => {
   const ref = useRef(null);
+  const [imgError, setImgError] = useState(false);
 
   const handleMove = (e) => {
     if (!ref.current) return;
@@ -49,24 +50,55 @@ const ProjectCard = ({ repo, index }) => {
         className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
         style={{ background: "radial-gradient(400px circle at var(--mx) var(--my), rgba(168,85,247,0.15), transparent 40%)" }}
       />
+
       <div className={"absolute -top-20 -right-20 w-40 h-40 rounded-full bg-gradient-to-br " + gradient + " blur-3xl opacity-30 group-hover:opacity-70 transition-opacity duration-500"} />
+
       <div className="relative">
+
+        {!imgError ? (
+          <div className="w-full h-40 rounded-xl overflow-hidden mb-4 border border-white/10 bg-white/5">
+            <img
+              src={`/projectImage/${repo.name}.png`}
+              alt={`Aperçu de ${repo.name}`}
+              className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+              loading="lazy"
+              onError={() => setImgError(true)}
+            />
+          </div>
+        ) : (
+          <div className={"w-full h-40 rounded-xl mb-4 border border-white/10 flex items-center justify-center bg-gradient-to-br " + gradient + " opacity-40"}>
+            <Code className="w-8 h-8 text-white/50" />
+          </div>
+        )}
+
         <div className="flex items-start justify-between mb-4">
           <div className="w-10 h-10 rounded-lg bg-surface border border-white/10 flex items-center justify-center group-hover:border-primary/50 transition-colors">
             <Code className="w-4 h-4 text-primary" />
           </div>
           <ExternalLink className="w-4 h-4 text-muted-foreground group-hover:text-secondary transition-colors" />
         </div>
+
         <h3 className="text-xl font-display font-bold text-white mb-2 group-hover:gradient-text-static transition-all">
           {repo.name}
         </h3>
         <p className="text-sm text-muted-foreground leading-relaxed mb-6 min-h-[40px] line-clamp-2">
-          {repo.description || "Developpement en cours..."}
+          {repo.description || "Développement en cours..."}
         </p>
+
         <div className="flex items-center gap-4 pt-4 border-t border-white/5">
           {repo.language && (
             <span className="flex items-center gap-1.5 text-xs text-muted-foreground">
-              <span className="w-2 h-2 rounded-full" style={{ background: repo.language === "JavaScript" ? "#f7df1e" : repo.language === "TypeScript" ? "#3178c6" : repo.language === "CSS" ? "#22d3ee" : repo.language === "HTML" ? "#e34f26" : "#a855f7" }} />
+              <span
+                className="w-2 h-2 rounded-full"
+                style={{
+                  background:
+                    repo.language === "JavaScript" ? "#f7df1e"
+                    : repo.language === "TypeScript" ? "#3178c6"
+                    : repo.language === "CSS" ? "#22d3ee"
+                    : repo.language === "HTML" ? "#e34f26"
+                    : "#a855f7"
+                }}
+              />
               {repo.language}
             </span>
           )}
@@ -77,6 +109,7 @@ const ProjectCard = ({ repo, index }) => {
             <GitFork className="w-3 h-3" /> {repo.forks_count || 0}
           </span>
         </div>
+
       </div>
     </motion.a>
   );
@@ -84,6 +117,7 @@ const ProjectCard = ({ repo, index }) => {
 
 const Skeleton = () => (
   <div className="glass rounded-2xl p-6 border border-white/5 animate-pulse">
+    <div className="w-full h-40 rounded-xl bg-white/5 mb-4" />
     <div className="w-10 h-10 rounded-lg bg-white/5 mb-4" />
     <div className="h-5 bg-white/5 rounded w-3/4 mb-3" />
     <div className="h-3 bg-white/5 rounded w-full mb-2" />
@@ -100,7 +134,10 @@ export const Projects = () => {
 
   useEffect(() => {
     fetch("https://api.github.com/users/manon-bourabia/repos?sort=updated&per_page=9")
-      .then((res) => { if (!res.ok) throw new Error("fetch failed"); return res.json(); })
+      .then((res) => {
+        if (!res.ok) throw new Error("fetch failed");
+        return res.json();
+      })
       .then((data) => {
         setRepos(data.filter((r) => !r.fork && r.name !== "mon-portfolio").slice(0, 6));
       })
@@ -115,8 +152,9 @@ export const Projects = () => {
           tag="// 02 - Projets"
           title="Ce que j'ai"
           highlight="construit."
-          subtitle="Une selection de projets recents, directement connectee a mon GitHub."
+          subtitle="Une sélection de projets récents, directement connectée à mon GitHub."
         />
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
           {loading && [...Array(6)].map((_, i) => <Skeleton key={i} />)}
           {!loading && !error && repos.map((repo, i) => (
@@ -128,6 +166,7 @@ export const Projects = () => {
             </div>
           )}
         </div>
+
         <div className="text-center mt-12">
           <motion.a
             initial={{ opacity: 0, y: 20 }}
